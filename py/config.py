@@ -8,7 +8,7 @@ path = find_dotenv()
 
 if path:
     print(f"Loading environment variables from {path}")
-    load_dotenv(path)
+    load_dotenv(path, override=True)
 else:
     raise FileNotFoundError("Could not find .env file")
     
