@@ -11,6 +11,8 @@ class Ec2worker(pulumi.ComponentResource):
                  ami_id: pulumi.Input[str], 
                  instance_type: pulumi.Input[str], 
                  tags: pulumi.Input[dict] = None,
+                 vpc_security_group_ids: pulumi.Input[list] = None,
+                 key_name: pulumi.Input[str] = None,
                  opts: pulumi.ResourceOptions = None):
         """
         Initializes an EC2 instance component.
@@ -38,6 +40,8 @@ class Ec2worker(pulumi.ComponentResource):
         self.instance = aws.ec2.Instance(f"{name}-instance",
             instance_type=instance_type,
             ami=ami_id,
+            vpc_security_group_ids=vpc_security_group_ids,
+            key_name=key_name,
             tags=effective_tags,
             opts=pulumi.ResourceOptions(parent=self) # Set parent to this component
         )
