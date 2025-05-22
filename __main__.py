@@ -2,7 +2,7 @@
 
 import pulumi
 import pulumi_aws as aws
-from ec2_worker import Ec2worker, ami_grabber, ssh_security_group
+from ec2_worker import Ec2worker, ami_grabber, create_ssh_security_group
 from py.dump_log import write_log_json
 
 from py.config import (
@@ -11,7 +11,8 @@ from py.config import (
     INSTANCE_NUMBER,
     INSTANCE_OS,
     PUB_KEY_PATH,
-    PUB_KEY_NAME
+    PUB_KEY_NAME,
+    SSH_IP_TO_ALLOW,
 )
 
 # ==== get the AMI of the specified OS ====
@@ -26,6 +27,10 @@ key_pair = aws.ec2.KeyPair("ssh_key_pair",
     public_key=pub_key
 )
 
+# ==== create a security group for SSH access ====
+ssh_security_group = create_ssh_security_group(
+    ip_to_allow=SSH_IP_TO_ALLOW
+)
 
 # ==== Create a list of EC2 instances ====
 instances = []

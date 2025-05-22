@@ -21,3 +21,4 @@ INSTANCE_OS = os.getenv("INSTANCE_OS", "ubuntu")
 # ==== network options ====
 PUB_KEY_PATH = os.getenv("PUB_KEY_PATH", "/home/ubuntu/.ssh/id_rsa.pub")
 PUB_KEY_NAME = os.getenv("PUB_KEY_NAME", "key-hello-aws")
+SSH_IP_TO_ALLOW = os.getenv("SSH_IP_TO_ALLOW", "0.0.0.0/0")
