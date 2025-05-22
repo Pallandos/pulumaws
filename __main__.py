@@ -3,19 +3,45 @@
 import pulumi
 import pulumi_aws as aws
 from ec2_worker import Ec2worker, ami_grabber
+from py.dump_log import write_log_json
 
-# 1. Récupérer l'AMI Amazon Linux 2 la plus récente
-# Vous pouvez remplacer cela par un ID d'AMI spécifique si vous le souhaitez.
-ami = ami_grabber.grab_ami("ubuntu")
+from py.config import (
+    INSTANCE_TYPE,
+    INSTANCE_BASE_NAME,
+    INSTANCE_NUMBER,
+    INSTANCE_OS,
+)
 
-# 2. Créer une instance de votre Ec2worker
-worker_instance = Ec2worker(name="my-first-worker",
-                            ami_id=ami,
-                            instance_type="t2.micro", # Choisissez le type d'instance souhaité
-                            tags={"Environment": "Development", "Project": "MyProject"})
+# ==== get the AMI of the specified OS ====
+ami = ami_grabber.grab_ami(INSTANCE_OS)
 
-# 3. Exporter certaines des sorties de l'instance
-pulumi.export("worker_instance_id", worker_instance.instance.id)
-pulumi.export("worker_public_ip", worker_instance.instance.public_ip)
-pulumi.export("worker_public_dns", worker_instance.instance.public_dns)
-pulumi.export("worker_arn", worker_instance.instance.arn)
+# ==== Create a list of EC2 instances ====
+instances = []
+
+for i in range(int(INSTANCE_NUMBER)):
+    instance_name = f"{INSTANCE_BASE_NAME}-{i+1}"
+    instance = Ec2worker(
+        name=instance_name,
+        ami_id=ami,
+        instance_type=INSTANCE_TYPE,
+        tags={
+            "Name": instance_name,
+            "Environment": "Pulumi",
+            "Project": "AWS-Pulumi",
+        },
+    )
+    instances.append(instance)
+    
+# ==== export data to a JSON file ====
+instances_outputs = [
+    pulumi.Output.all(
+        name = instance.instance._name,
+        instance_id = instance.instance.id,
+        public_ip = instance.instance.public_ip,
+        instance_type = instance.instance.instance_type,
+    )
+    for instance in instances
+]
+
+# dump the log to a JSON file
+pulumi.Output.all(*instances_outputs).apply(lambda infos: write_log_json(infos, filename="instances.json"))
