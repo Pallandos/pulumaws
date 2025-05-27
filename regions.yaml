@@ -1,0 +1,48 @@
+# this file describe the repartitions of instances
+
+continents:
+  north_america:
+    region:
+      us-east-1:      # Virginia : Northern
+        instances: 1
+      us-east-2:      # Ohio
+        instances: 0
+      us-west-1:      # California : Northern
+        instances: 0
+      us-west-2:      # Oregon
+        instances: 0
+      ca-central-1:   # Canada : Central
+        instances: 0
+  
+  europe:
+    region: 
+      eu-west-1:      # Ireland
+        instances: 1
+      eu-west-2:      # UK : London
+        instances: 0
+      eu-west-3:      # France : Paris
+        instances: 0
+      eu-central-1:   # Germany : Frankfurt
+        instances: 0
+      eu-north-1:     # Sweden : Stockholm
+        instances: 0
+  
+  asia_pacific:
+    region: 
+      ap-southeast-1: # Singapore
+        instances: 1
+      ap-southeast-2: # Australia : Sydney
+        instances: 1
+      ap-northeast-1: # Japan : Tokyo
+        instances: 0
+      ap-northeast-2: # South Korea : Seoul
+        instances: 0
+      ap-northeast-3: # Japan : Osaka
+        instances: 0
+      ap-south-1:     # India : Mumbai
+        instances: 0
+  
+  south_america:
+    region: 
+      sa-east-1:      # Brazil : São Paulo
+        instances: 1

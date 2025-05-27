@@ -19,7 +19,7 @@ case "$CLI_ARG1" in
 	deploy)
 		echo "Deploying the stack..."
 		# Add your deployment logic here
-		pulumi up --yes
+		pulumi up --yes --skip-preview
 		;;
 	destroy)
 		echo "Destroying the stack..."

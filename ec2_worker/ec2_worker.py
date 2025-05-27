@@ -14,6 +14,7 @@ class Ec2worker(pulumi.ComponentResource):
                  vpc_security_group_ids: pulumi.Input[list] = None,
                  key_name: pulumi.Input[str] = None,
                  user_data: pulumi.Input[str] = None,
+                 provider: aws.Provider = None,
                  opts: pulumi.ResourceOptions = None):
         """
         Initializes an EC2 instance component.
@@ -38,14 +39,19 @@ class Ec2worker(pulumi.ComponentResource):
             lambda args: {**(args[0] or {}), "Name": args[1]}
         )
 
-        self.instance = aws.ec2.Instance(f"{name}-instance",
+        # options for Provider
+        opts_ = pulumi.ResourceOptions(parent=self)
+        if provider:
+            opts_ = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(provider=provider))
+        
+        self.instance = aws.ec2.Instance(f"{name}",
             instance_type=instance_type,
             ami=ami_id,
             vpc_security_group_ids=vpc_security_group_ids,
             key_name=key_name,
             user_data=user_data,
             tags=effective_tags,
-            opts=pulumi.ResourceOptions(parent=self) # Set parent to this component
+            opts=opts_
         )
 
         # Register outputs for the component
@@ -54,4 +60,5 @@ class Ec2worker(pulumi.ComponentResource):
             "public_ip": self.instance.public_ip,
             "public_dns": self.instance.public_dns,
             "arn": self.instance.arn,
+            "region": self.instance.availability_zone
         })

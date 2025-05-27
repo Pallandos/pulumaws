@@ -20,7 +20,7 @@ Then you can follow the next steps :
 
 ## Configuration
 
-To configure, you should only interact with the `.env` file. 
+To configure, you should only interact with the `.env` file and with the `regions.yaml`. 
 
 Here is an example of a configuration file with full descriptions : 
 
@@ -34,6 +34,7 @@ INSTANCE_TYPE = t2.micro
 # instance type of the AWS EC2 to be created
 
 INSTANCE_NUMBER = 1
+# OBSOLETE : use only repartition with regions.yaml
 # amount of instances of the above type to be created
 
 INSTANCE_BASE_NAME = pulumaws
@@ -42,9 +43,12 @@ INSTANCE_BASE_NAME = pulumaws
 INSTANCE_OS = ubuntu 
 # supported OS : ubuntu or amazon-linux-2
 
+REGIONS_PATH = regions.yaml
+# path to the file with the repartition of instances
+
 
 # === network options ===
-# ATTENTION : this options will allow an IP to connect directly to the instances. It is not recommanded to 
+# DEPRECIATED : this options will allow an IP to connect directly to the instances. It is not recommanded to 
 # use this option because of difficulties to define the owner IP. Instead, use Tailscale 
 
 PUB_KEY_PATH = lib/keys/key-hello-aws.pub
@@ -61,6 +65,8 @@ TAILSCALE_ENABLED = True
 # True or False if you want to join your VPN
 
 ```
+
+For the location of the machines, write it into the `regions.yaml`. The only regions written by default are the one included in the Free Tier, change them only if you want to pay. If not, change only the amount in each location. 
 
 ## Troubleshooting
 
