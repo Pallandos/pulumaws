@@ -48,7 +48,7 @@ REGIONS_PATH = regions.yaml
 
 
 # === network options ===
-# DEPRECIATED : this options will allow an IP to connect directly to the instances. It is not recommanded to 
+# DEPRECIATED : those options will allow an IP to connect directly to the instances. It is not recommanded to 
 # use this option because of difficulties to define the owner IP. Instead, use Tailscale 
 
 PUB_KEY_PATH = lib/keys/key-hello-aws.pub
