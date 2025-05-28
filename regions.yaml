@@ -4,7 +4,7 @@ continents:
   north_america:
     region:
       us-east-1:      # Virginia : Northern
-        instances: 1
+        instances: 0
       us-east-2:      # Ohio
         instances: 0
       us-west-1:      # California : Northern
@@ -17,7 +17,7 @@ continents:
   europe:
     region: 
       eu-west-1:      # Ireland
-        instances: 1
+        instances: 0
       eu-west-2:      # UK : London
         instances: 0
       eu-west-3:      # France : Paris
@@ -45,4 +45,4 @@ continents:
   south_america:
     region: 
       sa-east-1:      # Brazil : São Paulo
-        instances: 1
+        instances: 0
