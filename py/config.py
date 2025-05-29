@@ -27,7 +27,6 @@ SSH_IP_TO_ALLOW = os.getenv("SSH_IP_TO_ALLOW", "0.0.0.0/0")
 
 # ==== Tailscale options ====
 TAILSCALE_AUTH_KEY_PATH = os.getenv("TAILSCALE_AUTH_KEY_PATH", "/lib/keys/tailscale-key")
-TAILSCALE_ENABLED = os.getenv("TAILSCALE_ENABLED", "true").lower() in ("true", "1", "yes")
 
 # ==== Docker Swarm options ====
 SWARM_MANAGER_IP = os.getenv("SWARM_MANAGER_IP", "127.0.0.1")

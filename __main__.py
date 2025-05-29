@@ -14,8 +14,9 @@ from py.config import (
     PUB_KEY_NAME,
     SSH_IP_TO_ALLOW,
     TAILSCALE_AUTH_KEY_PATH,
-    TAILSCALE_ENABLED,
-    REGIONS_PATH
+    REGIONS_PATH,
+    SWARM_JOIN_TOKEN,
+    SWARM_MANAGER_IP,
     )
 
 # ==== Load regions configuration ====
@@ -68,16 +69,17 @@ for region in REGIONS:
         numbers_by_continent[region.split('-')[0]] += 1
     
         # Generate user data script for Tailscale
-        user_data = None
-        if TAILSCALE_ENABLED:
-            user_data = generate_userdata(
-                tailscale_key_path=TAILSCALE_AUTH_KEY_PATH,
-                hostname=instance_name,
-                tags=["tag:aws-instances"],
-                accept_routes=True,
-                accept_dns=True,
-                enable_ssh=True
-            )
+
+        user_data = generate_userdata(
+            tailscale_key_path=TAILSCALE_AUTH_KEY_PATH,
+            hostname=instance_name,
+            tags=["tag:aws-instances"],
+            docker_swarm_join_token=SWARM_JOIN_TOKEN,
+            docker_swarm_manager_ip=SWARM_MANAGER_IP,
+            accept_routes=True,
+            accept_dns=True,
+            enable_ssh=True
+        )
         
         instance = Ec2worker(
             name=instance_name,
