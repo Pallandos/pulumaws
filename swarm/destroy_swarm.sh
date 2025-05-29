@@ -8,7 +8,6 @@ set -euo pipefail
 # === variables ====
 ENV_FILE=".env"
 
-RED='\033[0;31m'
 RESET_COLOR='\033[0m'
 ORANGE='\033[0;33m'
 GREEN='\033[0;32m'

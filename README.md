@@ -4,6 +4,8 @@ By Pallandos
 
 This project is a test project for using aws EC2 and Pulumi
 
+DOC NOT ACTUAL /// NEED UPDATE ///
+
 ## Installation
 
 You first need to have Pulumi installed on your machine, and ready to start for AWS : see [Pulumi getting started for AWS](https://www.pulumi.com/docs/iac/get-started/aws/). Make sure you can access to your AWS account with Pulumi.

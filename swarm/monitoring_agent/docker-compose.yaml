@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  monitoring-agent:
+    image: pallandos/monitoring-agent:latest
+    ports:
+      - "5000:5000"
+    deploy:
+      mode: global 
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.5'
+        reservations:
+          memory: 64M
+          cpus: '0.25'
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: overlay

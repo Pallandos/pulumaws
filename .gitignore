@@ -5,3 +5,4 @@
 
 __pycache__/
 logs/
+swarm/monitoring_agent/test_local.py
