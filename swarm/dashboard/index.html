@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖥️ Node Monitoring</h1>
+            <div class="node-info">
+                <h2 id="node-name">Chargement...</h2>
+                <p class="timestamp" id="last-update">--</p>
+            </div>
+        </header>
+
+        <div class="metrics-grid">
+            <!-- CPU Metrics -->
+            <div class="metric-card">
+                <h3>🔧 CPU</h3>
+                <div class="metric-value">
+                    <span class="big-number" id="cpu-usage">--%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill cpu-usage" id="cpu-bar"></div>
+                </div>
+                <div class="metric-details">
+                    <p><strong>Cores:</strong> <span id="cpu-cores">--</span></p>
+                    <p><strong>Fréquence:</strong> <span id="cpu-freq">--</span> MHz</p>
+                </div>
+            </div>
+
+            <!-- Placeholder pour plus tard (mémoire, etc.) -->
+            <div class="metric-card">
+                <h3>📊 Statut</h3>
+                <div class="metric-value">
+                    <span class="status" id="node-status">🟢 En ligne</span>
+                </div>
+                <div class="metric-details">
+                    <p><strong>Dernière réponse:</strong> <span id="response-time">-- ms</span></p>
+                    <p><strong>Uptime:</strong> <span id="uptime">--</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button onclick="fetchData()" class="refresh-btn">🔄 Actualiser</button>
+            <a href="http://localhost:5000/health" class="api-link" target="_blank">📊 API JSON</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,7 +1,9 @@
 import psutil
 from flask import Flask, jsonify
+from flask_cors import CORS
 import socket
 from datetime import datetime
+import os
 
 def info_cpu():
     """Get CPU information including number of cores, usage, and frequency.
@@ -23,6 +25,7 @@ def info_cpu():
     return response
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/health')
 def health():
@@ -30,7 +33,7 @@ def health():
     cpu_info = info_cpu()
     
     response = {
-        "node": socket.gethostname(),
+        "node": os.environ.get('NODE_HOSTNAME', socket.gethostname()),
         "timestamp": datetime.now().isoformat(),
         "cpu": cpu_info
     }

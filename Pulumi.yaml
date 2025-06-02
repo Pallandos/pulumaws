@@ -1,5 +1,5 @@
 name: pulumaws
-description: A minimal AWS Python Pulumi program
+description: project to help the deployment of a Docker swarm inside AWS
 runtime:
   name: python
   options:

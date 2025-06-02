@@ -5,6 +5,8 @@ services:
     image: pallandos/monitoring-agent:latest
     ports:
       - "5000:5000"
+    environment:
+      - NODE_HOSTNAME={{.Node.Hostname}}
     deploy:
       mode: global 
       resources:
@@ -18,6 +20,19 @@ services:
         condition: on-failure
         delay: 10s
         max_attempts: 3
+    networks:
+      - monitoring
+
+  dashboard:
+    image: pallandos/monitoring-dashboard:latest
+    ports:
+      - "8080:80"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 64M
+          cpus: '0.25'
     networks:
       - monitoring
 
