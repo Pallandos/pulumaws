@@ -4,11 +4,14 @@ services:
   monitoring-agent:
     image: pallandos/monitoring-agent:latest
     ports:
-      - "5000:5000"
+      - target: 5000
+        published: 5000
+        mode: host
     environment:
       - NODE_HOSTNAME={{.Node.Hostname}}
     deploy:
       mode: global 
+      endpoint_mode: dnsrr
       resources:
         limits:
           memory: 128M

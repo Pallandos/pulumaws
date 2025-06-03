@@ -27,7 +27,7 @@ async function fetchData() {
         updateStatus('online');
         
     } catch (error) {
-        console.error('Erreur lors de la récupération des données:', error);
+        console.error('Failure to fectch data :', error);
         updateStatus('offline', error.message);
     }
 }
@@ -36,7 +36,7 @@ function updateUI(data, responseTime) {
     // Informations du nœud
     document.getElementById('node-name').textContent = data.node;
     document.getElementById('last-update').textContent = 
-        `Dernière mise à jour: ${new Date(data.timestamp).toLocaleString()}`;
+        `Last update: ${new Date(data.timestamp).toLocaleString()}`;
     
     // Métriques CPU
     document.getElementById('cpu-usage').textContent = `${data.cpu.usage}%`;
@@ -60,10 +60,10 @@ function updateStatus(status, errorMessage = '') {
     const statusElement = document.getElementById('node-status');
     
     if (status === 'online') {
-        statusElement.textContent = '🟢 En ligne';
+        statusElement.textContent = '🟢 Online';
         statusElement.className = 'status online';
     } else {
-        statusElement.textContent = '🔴 Hors ligne';
+        statusElement.textContent = '🔴 Offline';
         statusElement.className = 'status offline';
         
         if (errorMessage) {

@@ -3,6 +3,6 @@
 
 /lib/keys/
 
-__pycache__/
+__pycache__/keys/
 logs/
 swarm/monitoring_agent/test_local.py

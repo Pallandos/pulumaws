@@ -9,6 +9,10 @@ ENV_FILE=".env"
 SWARM_JOIN_TOKEN=""
 SWARM_MANAGER_IP="${SWARM_MANAGER_IP:-$(hostname -I | awk '{print $1}')}" # Default to the first IP address of the host
 
+COLOR_RED="\033[0;31m"
+COLOR_GREEN="\033[0;32m"
+COLOR_RESET="\033[0m"
+
 # load environment variables from .env file
 if [[ -f .env ]]; then
     export "$(grep -v '^#' .env | xargs)"
@@ -18,6 +22,16 @@ else
 fi
 
 # === functions ====
+reload_env() {
+    if [[ -f .env ]]; then
+        set -a
+        # shellcheck disable=SC1091
+        source .env
+        set +a
+        echo "[INFO ] Environment variables reloaded"
+    fi
+}
+
 set_or_replace_key() {
     local key="$1"
     local value="$2"
@@ -56,24 +70,22 @@ leave_swarm_if_exists() {
     fi
 }
 
-join_swarm() {
-    if [[ -z "$SWARM_JOIN_TOKEN" ]]; then
-        echo "[ERROR] SWARM_JOIN_TOKEN is not set. Cannot join the swarm."
-        exit 1
-    fi
-
-    echo "[INFO ] Joining Docker Swarm as a worker..."
-    docker swarm join --token "$SWARM_JOIN_TOKEN" "${SWARM_MANAGER_IP}:2377"
+launch_stack() {
+    echo "[INFO ] Launching Docker Swarm stack..."
+    sleep 5 # Wait for a few seconds to ensure the swarm is ready
+    docker stack deploy -c ./swarm/docker-compose.yaml "$SWARM_STACK_NAME"
     if [[ $? -ne 0 ]]; then
-        echo "[ERROR] Failed to join Docker Swarm"
+        echo -e "${COLOR_RED}[ERROR]${RESET_COLOR} Failed to deploy Docker Swarm stack"
         exit 1
     fi
-    echo "[INFO ] Successfully joined Docker Swarm"
+    echo -e "${COLOR_GREEN}[INFO ]${COLOR_RESET} Docker Swarm stack deployed successfully"
 }
+
 
 # ========= Main Logic ==========
 leave_swarm_if_exists
 init_manager
 set_or_replace_key "SWARM_JOIN_TOKEN" "$SWARM_JOIN_TOKEN"
+reload_env
 pulumi up --yes --skip-preview
-#TODO: join_swarm
+launch_stack
