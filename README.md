@@ -38,7 +38,7 @@ When everything is online, you can connect to the monitoring dashboard of each i
 
 	http://{NAME}:8080/
 
-where {NAME} is the hostname of your node in Tailscale ((see [troubleshooting 2](#troubleshooting))).
+where {NAME} is the hostname of your node in Tailscale (see [troubleshooting 2](#troubleshooting)).
 
 ![Node monitoring UI](./lib/img/screen.png)
 
